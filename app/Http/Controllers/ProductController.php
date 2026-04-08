@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index(): View
     {
-        $products = Product::with('category')->paginate(10);
+        $products = Product::with('category')->paginate(15);
 
         return view('products.index', compact('products'));
     }
@@ -47,7 +47,7 @@ class ProductController extends Controller
 
         Product::create($validated);
 
-        return redirect()->route('products.index')
+        return redirect('/products')
             ->with('success', 'Product created successfully.');
     }
 
@@ -87,7 +87,7 @@ class ProductController extends Controller
 
         $product->update($validated);
 
-        return redirect()->route('products.index')
+        return redirect('/products')
             ->with('success', 'Product updated successfully.');
     }
 
@@ -98,7 +98,7 @@ class ProductController extends Controller
     {
         $product->delete();
 
-        return redirect()->route('products.index')
+        return redirect('/products')
             ->with('success', 'Product deleted successfully.');
     }
 }
