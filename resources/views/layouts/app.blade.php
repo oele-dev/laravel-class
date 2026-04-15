@@ -13,8 +13,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Scripts -->
-    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
-</head>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="antialiased bg-gray-50">
     <div class="min-h-screen">
