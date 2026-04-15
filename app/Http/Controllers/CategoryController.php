@@ -5,26 +5,29 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(): Response
     {
         $categories = Category::withCount('products')->paginate(10);
 
-        return view('categories.index', compact('categories'));
+        return Inertia::render('Categories/Index', [
+            'categories' => $categories,
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): View
+    public function create(): Response
     {
-        return view('categories.create');
+        return Inertia::render('Categories/Create');
     }
 
     /**
@@ -46,19 +49,23 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Category $category): View
+    public function show(Category $category): Response
     {
         $category->load('products');
 
-        return view('categories.show', compact('category'));
+        return Inertia::render('Categories/Show', [
+            'category' => $category,
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category): View
+    public function edit(Category $category): Response
     {
-        return view('categories.edit', compact('category'));
+        return Inertia::render('Categories/Edit', [
+            'category' => $category,
+        ]);
     }
 
     /**

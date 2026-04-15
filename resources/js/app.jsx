@@ -1,3 +1,4 @@
+import '@vitejs/plugin-react/preamble';
 import './bootstrap';
 import '../css/app.css';
 

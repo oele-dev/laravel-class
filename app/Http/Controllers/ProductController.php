@@ -7,29 +7,35 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(): Response
     {
         $products = Product::with('category')->paginate(15);
 
-        return view('products.index', compact('products'));
+        return Inertia::render('Products/Index', [
+            'products' => $products,
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): View
+    public function create(): Response
     {
         $categories = Category::all();
         $unitOfMeasures = UnitOfMeasure::cases();
 
-        return view('products.create', compact('categories', 'unitOfMeasures'));
+        return Inertia::render('Products/Create', [
+            'categories' => $categories,
+            'unitOfMeasures' => $unitOfMeasures,
+        ]);
     }
 
     /**
@@ -54,22 +60,28 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product): View
+    public function show(Product $product): Response
     {
         $product->load('category');
 
-        return view('products.show', compact('product'));
+        return Inertia::render('Products/Show', [
+            'product' => $product,
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product): View
+    public function edit(Product $product): Response
     {
         $categories = Category::all();
         $unitOfMeasures = UnitOfMeasure::cases();
 
-        return view('products.edit', compact('product', 'categories', 'unitOfMeasures'));
+        return Inertia::render('Products/Edit', [
+            'product' => $product,
+            'categories' => $categories,
+            'unitOfMeasures' => $unitOfMeasures,
+        ]);
     }
 
     /**
