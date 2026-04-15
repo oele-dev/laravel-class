@@ -2,7 +2,7 @@ import { Head, Link } from '@inertiajs/react';
 import { usePage } from '@inertiajs/react';
 
 export default function App({ children }) {
-    const { flash } = usePage().props;
+    const { flash = {} } = usePage().props;
 
     return (
         <>
@@ -14,7 +14,6 @@ export default function App({ children }) {
                     href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap"
                     rel="stylesheet"
                 />
-                <script src="https://cdn.tailwindcss.com"></script>
             </Head>
 
             <div className="min-h-screen bg-gray-50">

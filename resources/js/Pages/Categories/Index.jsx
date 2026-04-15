@@ -58,16 +58,24 @@ export default function Index({ categories }) {
             {categories.links && (
                 <div className="mt-4">
                     {categories.links.map((link, index) => (
-                        <Link
-                            key={index}
-                            href={link.url}
-                            className={`px-3 py-2 mx-1 rounded ${
-                                link.active
-                                    ? 'bg-blue-500 text-white'
-                                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                            }`}
-                            dangerouslySetInnerHTML={{ __html: link.label }}
-                        />
+                        link.url ? (
+                            <Link
+                                key={index}
+                                href={link.url}
+                                className={`px-3 py-2 mx-1 rounded ${
+                                    link.active
+                                        ? 'bg-blue-500 text-white'
+                                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                }`}
+                                dangerouslySetInnerHTML={{ __html: link.label }}
+                            />
+                        ) : (
+                            <span
+                                key={index}
+                                className="px-3 py-2 mx-1 rounded bg-blue-500 text-white"
+                                dangerouslySetInnerHTML={{ __html: link.label }}
+                            />
+                        )
                     ))}
                 </div>
             )}
