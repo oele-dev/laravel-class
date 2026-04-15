@@ -1,58 +1,144 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Class Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A small Laravel application for managing categories and products.
 
-## About Laravel
+This repository is built on Laravel and includes:
+- resource routes for `categories` and `products`
+- Eloquent models and relationships
+- database migrations for categories and products
+- Blade views for CRUD operations
+- a simple admin-style inventory workflow
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## How this Laravel app works
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Laravel is an MVC framework. This application follows Laravel conventions in these ways:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- `routes/web.php` defines routes and maps them to controllers.
+- `app/Http/Controllers/CategoryController.php` and `app/Http/Controllers/ProductController.php` implement CRUD operations.
+- `app/Models/Category.php` and `app/Models/Product.php` define database models and relationships.
+- `database/migrations/` contains the schema for `categories` and `products`.
+- `resources/views/` contains Blade templates for listing, creating, editing, viewing, and deleting records.
 
-## Learning Laravel
+This app uses standard Laravel features:
+- `Route::resource()` for RESTful routing
+- `Request` validation for form input
+- Eloquent ORM for database access
+- migrations to create database tables
+- Blade templating for the UI
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## What this repository contains
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Key files and directories:
+- `app/Http/Controllers/` — controller logic for categories and products
+- `app/Models/` — Eloquent models and relationships
+- `app/Enums/UnitOfMeasure.php` — allowed unit values for products
+- `database/migrations/` — schema definitions for `categories` and `products`
+- `resources/views/` — Blade templates for UI pages
+- `routes/web.php` — web routes configuration
+- `composer.json` — PHP dependencies and project scripts
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## Application features
 
-## Agentic Development
+The application currently supports:
+- category CRUD
+- product CRUD
+- product-category relationship
+- pagination for lists
+- validation for required fields
+- numeric and enum validation for products
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Install and run locally
+
+To get started locally, fork the repository on GitHub and clone your fork.
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/<your-username>/laravel-class.git
+cd laravel-class
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Install PHP dependencies:
 
-## Contributing
+```bash
+composer install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Copy the example environment file and generate an application key:
 
-## Code of Conduct
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Configure the database in `.env`.
 
-## Security Vulnerabilities
+### Option 1: SQLite (quick local setup)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+touch database/database.sqlite
+```
+
+Then set in `.env`:
+
+```env
+DB_CONNECTION=sqlite
+DB_DATABASE=/workspaces/laravel-class/database/database.sqlite
+```
+
+### Option 2: MySQL / MariaDB
+
+Update `.env` with your credentials:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel_class
+DB_USERNAME=your_user
+DB_PASSWORD=your_password
+```
+
+Run migrations:
+
+```bash
+php artisan migrate
+```
+
+Install frontend dependencies and build assets:
+
+```bash
+npm install
+npm run dev
+```
+
+Start the local development server:
+
+```bash
+php artisan serve
+```
+
+Visit `http://127.0.0.1:8000` in your browser.
+
+## Work on the project
+
+After forking and cloning your own copy:
+- create a feature branch for your work
+- run `composer install` and `npm install`
+- use `php artisan migrate` after changing migrations
+- use `npm run dev` while developing frontend assets
+- use `php artisan test` to run Laravel tests
+
+## Commit/build process notes
+
+This repository appears to have been imported from GitHub as the current project state, with a main commit from the original source. The current application was built by:
+- starting from a Laravel skeleton project
+- adding migrations for categories and products
+- creating models and Eloquent relationships
+- adding resource controllers and validation logic
+- adding views for category and product management
+- defining the app routes in `routes/web.php`
+
+If you want to extend this app, add a new migration, update models/controllers, and then run `php artisan migrate` or `php artisan migrate:fresh` to rebuild the database.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open source and released under the MIT license.
