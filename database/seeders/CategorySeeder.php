@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
-use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
@@ -13,13 +12,21 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create('es_ES'); // Configurar Faker para español
+        $categories = [
+            ['name' => 'Electrónicos', 'minimum_quantity' => 5],
+            ['name' => 'Ropa y Accesorios', 'minimum_quantity' => 10],
+            ['name' => 'Alimentos y Bebidas', 'minimum_quantity' => 20],
+            ['name' => 'Hogar y Jardín', 'minimum_quantity' => 3],
+            ['name' => 'Deportes y Recreación', 'minimum_quantity' => 8],
+            ['name' => 'Libros y Educación', 'minimum_quantity' => 15],
+            ['name' => 'Salud y Belleza', 'minimum_quantity' => 12],
+            ['name' => 'Automóviles', 'minimum_quantity' => 2],
+            ['name' => 'Juguetes y Juegos', 'minimum_quantity' => 25],
+            ['name' => 'Herramientas y Ferretería', 'minimum_quantity' => 6],
+        ];
 
-        for ($i = 0; $i < 100; $i++) {
-            Category::create([
-                'name' => $faker->unique()->words(rand(1, 3), true),
-                'minimum_quantity' => $faker->numberBetween(1, 50),
-            ]);
+        foreach ($categories as $category) {
+            Category::create($category);
         }
     }
 }
