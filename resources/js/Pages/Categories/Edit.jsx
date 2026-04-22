@@ -46,7 +46,6 @@ export default function Edit({ category }) {
                         submitUrl={`/categories/${category.id}`}
                         method="put"
                         submitText="Update Category"
-                        onSuccess={() => window.location.href = '/categories'}
                     />
                 </div>
             </div>

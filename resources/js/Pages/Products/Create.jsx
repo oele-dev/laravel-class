@@ -65,7 +65,6 @@ export default function Create({ categories, unitOfMeasures }) {
                         submitUrl="/products"
                         method="post"
                         submitText="Create Product"
-                        onSuccess={() => window.location.href = '/products'}
                     />
                 </div>
             </div>

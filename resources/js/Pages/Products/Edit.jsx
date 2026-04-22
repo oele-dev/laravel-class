@@ -73,7 +73,6 @@ export default function Edit({ product, categories, unitOfMeasures }) {
                         submitUrl={`/products/${product.id}`}
                         method="put"
                         submitText="Update Product"
-                        onSuccess={() => window.location.href = '/products'}
                     />
                 </div>
             </div>

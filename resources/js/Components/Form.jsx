@@ -1,30 +1,31 @@
 import { useForm } from '@inertiajs/react';
-import { useEffect } from 'react';
 
 export default function Form({ fields, submitUrl, method = 'post', submitText = 'Submit', onSuccess }) {
-    const { data, setData, post, put, processing, errors, reset } = useForm(
-        fields.reduce((acc, field) => ({ ...acc, [field.name]: field.value || '' }), {})
-    );
+    // Inicializa useForm con un objeto plano de campos
+    const initialData = {};
+    fields.forEach(field => {
+        initialData[field.name] = field.value || '';
+    });
+    const { data, setData, post, put, processing, errors, reset } = useForm(initialData);
 
-    const handleSubmit = (e) => {
+    function handleChange(field, value, type) {
+        setData(field, type === 'checkbox' ? value.target.checked : value.target.value);
+    }
+
+    function handleSubmit(e) {
         e.preventDefault();
-
+        const options = {
+            onSuccess: () => {
+                reset();
+                if (onSuccess) onSuccess();
+            },
+        };
         if (method === 'put') {
-            put(submitUrl, {
-                onSuccess: () => {
-                    reset();
-                    if (onSuccess) onSuccess();
-                },
-            });
+            put(submitUrl, options);
         } else {
-            post(submitUrl, {
-                onSuccess: () => {
-                    reset();
-                    if (onSuccess) onSuccess();
-                },
-            });
+            post(submitUrl, options);
         }
-    };
+    }
 
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -39,7 +40,7 @@ export default function Form({ fields, submitUrl, method = 'post', submitText = 
                                 id={field.name}
                                 name={field.name}
                                 value={data[field.name]}
-                                onChange={(e) => setData(field.name, e.target.value)}
+                                onChange={(e) => handleChange(field.name, e, field.type)}
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                             >
                                 {field.options?.map((option) => (
@@ -54,7 +55,7 @@ export default function Form({ fields, submitUrl, method = 'post', submitText = 
                                 id={field.name}
                                 name={field.name}
                                 value={data[field.name]}
-                                onChange={(e) => setData(field.name, e.target.value)}
+                                onChange={(e) => handleChange(field.name, e, field.type)}
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                             />
                         )}
@@ -64,7 +65,6 @@ export default function Form({ fields, submitUrl, method = 'post', submitText = 
                     )}
                 </div>
             ))}
-
             <div className="flex items-center justify-end">
                 <button
                     type="submit"

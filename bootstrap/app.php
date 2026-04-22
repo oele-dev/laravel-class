@@ -10,8 +10,11 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->append(\App\Http\Middleware\ForceAppUrl::class);
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->web(append: [
+            \App\Http\Middleware\ForceAppUrl::class,
+            \App\Http\Middleware\HandleInertiaRequests::class
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

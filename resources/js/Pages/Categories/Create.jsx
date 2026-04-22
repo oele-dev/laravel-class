@@ -38,7 +38,6 @@ export default function Create() {
                         submitUrl="/categories"
                         method="post"
                         submitText="Create Category"
-                        onSuccess={() => window.location.href = '/categories'}
                     />
                 </div>
             </div>
