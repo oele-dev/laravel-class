@@ -8,3 +8,8 @@ Route::redirect('/', '/products');
 
 Route::resource('categories', CategoryController::class);
 Route::resource('products', ProductController::class);
+
+use Inertia\Inertia;
+Route::get('/api-products', function () {
+	return Inertia::render('Products/ApiProductsTest');
+});
