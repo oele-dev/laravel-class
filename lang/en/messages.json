@@ -1,0 +1,18 @@
+{
+    "welcome": "Welcome to the application!",
+    "categories": "Categories",
+    "products": "Products",
+    "create": "Create",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "add_new_product": "Add New Product",
+    "no_products_found": "No products found.",
+    "view": "View",
+    "created_at": "Created At",
+    "price": "Price",
+    "quantity": "Quantity",
+    "unit": "Unit",
+    "category": "Category"
+}

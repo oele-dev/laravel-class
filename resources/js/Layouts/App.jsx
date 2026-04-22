@@ -1,8 +1,20 @@
 import { Head, Link } from '@inertiajs/react';
 import { usePage } from '@inertiajs/react';
+import { LocaleProvider, useLocale } from '../locale';
+import t from '../t';
 
 export default function App({ children }) {
-    const { flash = {} } = usePage().props;
+    const { flash = {}, locale: initialLocale = 'en' } = usePage().props;
+
+    return (
+        <LocaleProvider initialLocale={initialLocale}>
+            <AppLayoutContent flash={flash}>{children}</AppLayoutContent>
+        </LocaleProvider>
+    );
+}
+
+function AppLayoutContent({ flash, children }) {
+    const { locale, setLocale } = useLocale();
 
     return (
         <>
@@ -42,7 +54,7 @@ export default function App({ children }) {
                                                 : ''
                                         }`}
                                     >
-                                        Categories
+                                        {t('categories', locale)}
                                     </Link>
                                     <Link
                                         href="/products"
@@ -52,9 +64,24 @@ export default function App({ children }) {
                                                 : ''
                                         }`}
                                     >
-                                        Products
+                                        {t('products', locale)}
                                     </Link>
                                 </div>
+                            </div>
+                            {/* Language Switcher */}
+                            <div className="flex items-center space-x-2">
+                                <button
+                                    className={`px-2 py-1 rounded ${locale === 'en' ? 'bg-indigo-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+                                    onClick={() => setLocale('en')}
+                                >
+                                    EN
+                                </button>
+                                <button
+                                    className={`px-2 py-1 rounded ${locale === 'es' ? 'bg-indigo-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+                                    onClick={() => setLocale('es')}
+                                >
+                                    ES
+                                </button>
                             </div>
                         </div>
                     </div>

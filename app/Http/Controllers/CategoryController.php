@@ -19,6 +19,7 @@ class CategoryController extends Controller
 
         return Inertia::render('Categories/Index', [
             'categories' => $categories,
+            'locale' => app()->getLocale(),
         ]);
     }
 
@@ -27,7 +28,9 @@ class CategoryController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Categories/Create');
+        return Inertia::render('Categories/Create', [
+            'locale' => app()->getLocale(),
+        ]);
     }
 
     /**
@@ -42,6 +45,7 @@ class CategoryController extends Controller
 
         Category::create($validated);
 
+        // Inertia espera un redirect después de éxito, pero los errores de validación se manejan automáticamente
         return redirect('/categories')
             ->with('success', 'Category created successfully.');
     }
@@ -55,6 +59,7 @@ class CategoryController extends Controller
 
         return Inertia::render('Categories/Show', [
             'category' => $category,
+            'locale' => app()->getLocale(),
         ]);
     }
 
@@ -65,6 +70,7 @@ class CategoryController extends Controller
     {
         return Inertia::render('Categories/Edit', [
             'category' => $category,
+            'locale' => app()->getLocale(),
         ]);
     }
 
@@ -80,6 +86,7 @@ class CategoryController extends Controller
 
         $category->update($validated);
 
+        // Inertia espera un redirect después de éxito, pero los errores de validación se manejan automáticamente
         return redirect('/categories')
             ->with('success', 'Category updated successfully.');
     }

@@ -1,0 +1,18 @@
+{
+    "welcome": "¡Bienvenido a la aplicación!",
+    "categories": "Categorías",
+    "products": "Productos",
+    "create": "Crear",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "add_new_product": "Agregar nuevo producto",
+    "no_products_found": "No se encontraron productos.",
+    "view": "Ver",
+    "created_at": "Creado el",
+    "price": "Precio",
+    "quantity": "Cantidad",
+    "unit": "Unidad",
+    "category": "Categoría"
+}

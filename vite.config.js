@@ -6,7 +6,7 @@ import { resolve } from 'path';
 
 const codespaceHost = '0.0.0.0';
 const codespacePort = 5173;
-const codespaceUrl = 'https://ominous-succotash-gxr44jg6vxhwprj-5173.app.github.dev';
+const codespaceUrl = 'https://vigilant-guide-p7wjj4x957hvvp.github.dev/';
 
 export default defineConfig({
     plugins: [
@@ -28,12 +28,12 @@ export default defineConfig({
         strictPort: true,
         origin: codespaceUrl,
         cors: {
-            origin: ['https://ominous-succotash-gxr44jg6vxhwprj-8000.app.github.dev'],
+            origin: ['https://vigilant-guide-p7wjj4x957hvvp-8000.app.github.dev'],
             credentials: false,
         },
         hmr: {
             protocol: 'wss',
-            host: 'ominous-succotash-gxr44jg6vxhwprj-5173.app.github.dev',
+            host: 'vigilant-guide-p7wjj4x957hvvp.github.dev/',
             clientPort: 443,
         },
         watch: {

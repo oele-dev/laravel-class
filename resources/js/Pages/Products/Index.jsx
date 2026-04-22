@@ -1,29 +1,34 @@
+import { useState } from 'react';
+import { useLocale } from '../../locale';
+import t  from '../../t';
 import { Head, Link, router } from '@inertiajs/react';
 import DataTable from '@/Components/DataTable';
 
-export default function Index({ products }) {
+export default function Index({ products, filters = {} }) {
+    const [search, setSearch] = useState(filters.search || '');
+    const { locale } = useLocale();
     const columns = [
         { key: 'id', label: 'ID' },
-        { key: 'name', label: 'Name' },
+        { key: 'name', label: t('name', locale) },
         {
             key: 'price',
-            label: 'Price',
+            label: t('price', locale),
             render: (item) => `$${parseFloat(item.price).toFixed(2)}`
         },
-        { key: 'quantity', label: 'Quantity' },
+        { key: 'quantity', label: t('quantity', locale) },
         {
             key: 'unit_of_measure',
-            label: 'Unit',
+            label: t('unit', locale),
             render: (item) => item.unit_of_measure
         },
         {
             key: 'category',
-            label: 'Category',
+            label: t('category', locale),
             render: (item) => item.category?.name || 'N/A'
         },
         {
             key: 'created_at',
-            label: 'Created At',
+            label: t('created_at', locale),
             render: (item) => new Date(item.created_at).toLocaleDateString()
         },
     ];
@@ -34,38 +39,60 @@ export default function Index({ products }) {
                 href={`/products/${product.id}`}
                 className="text-indigo-600 hover:text-indigo-900 mr-3"
             >
-                View
+                {t('view', locale)}
             </Link>
             <Link
                 href={`/products/${product.id}/edit`}
                 className="text-indigo-600 hover:text-indigo-900 mr-3"
             >
-                Edit
+                {t('edit', locale)}
             </Link>
             <button
                 onClick={() => {
-                    if (confirm('Are you sure you want to delete this product?')) {
+                    if (confirm(locale === 'es' ? '¿Seguro que deseas eliminar este producto?' : 'Are you sure you want to delete this product?')) {
                         router.delete(`/products/${product.id}`);
                     }
                 }}
                 className="text-red-600 hover:text-red-900"
             >
-                Delete
+                {t('delete', locale)}
             </button>
         </>
     );
 
     return (
         <>
-            <Head title="Products" />
+            <Head title={t('products', locale)} />
+
+            {/* Search Bar */}
+            <div className="mb-4 flex items-center">
+                <input
+                    type="search"
+                    className="border rounded px-3 py-2 mr-2 w-64"
+                    placeholder={locale === 'es' ? 'Buscar por producto o categoría...' : 'Search by product or category...'}
+                    value={search}
+                    onChange={e => setSearch(e.target.value)}
+                    onKeyDown={e => {
+                        if (e.key === 'Enter') {
+                            router.get('/products', { search }, { preserveState: true });
+                        }
+                    }}
+                />
+                <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={() => router.get('/products', { search }, { preserveState: true })}
+                >
+                    {locale === 'es' ? 'Buscar' : 'Search'}
+                </button>
+            </div>
 
             <DataTable
                 columns={columns}
                 data={products.data}
                 actions={actions}
-                emptyMessage="No products found."
+                emptyMessage={t('no_products_found', locale)}
                 createUrl="/products/create"
-                createText="Add New Product"
+                createText={t('add_new_product', locale)}
             />
 
             {/* Pagination */}

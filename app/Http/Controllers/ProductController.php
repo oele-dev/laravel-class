@@ -15,12 +15,29 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $products = Product::with('category')->paginate(15);
+        $search = $request->input('search');
+        $productsQuery = Product::with('category');
+
+        if ($search) {
+            $productsQuery->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%$search%")
+                    ->orWhereHas('category', function ($q) use ($search) {
+                        $q->where('name', 'like', "%$search%")
+                        ;
+                    });
+            });
+        }
+
+        $products = $productsQuery->paginate(15)->withQueryString();
 
         return Inertia::render('Products/Index', [
             'products' => $products,
+            'filters' => [
+                'search' => $search,
+            ],
+            'locale' => app()->getLocale(),
         ]);
     }
 
@@ -35,6 +52,7 @@ class ProductController extends Controller
         return Inertia::render('Products/Create', [
             'categories' => $categories,
             'unitOfMeasures' => $unitOfMeasures,
+            'locale' => app()->getLocale(),
         ]);
     }
 
@@ -53,6 +71,7 @@ class ProductController extends Controller
 
         Product::create($validated);
 
+        // Inertia espera un redirect después de éxito, pero los errores de validación se manejan automáticamente
         return redirect('/products')
             ->with('success', 'Product created successfully.');
     }
@@ -66,6 +85,7 @@ class ProductController extends Controller
 
         return Inertia::render('Products/Show', [
             'product' => $product,
+            'locale' => app()->getLocale(),
         ]);
     }
 
@@ -81,6 +101,7 @@ class ProductController extends Controller
             'product' => $product,
             'categories' => $categories,
             'unitOfMeasures' => $unitOfMeasures,
+            'locale' => app()->getLocale(),
         ]);
     }
 
@@ -99,6 +120,7 @@ class ProductController extends Controller
 
         $product->update($validated);
 
+        // Inertia espera un redirect después de éxito, pero los errores de validación se manejan automáticamente
         return redirect('/products')
             ->with('success', 'Product updated successfully.');
     }
